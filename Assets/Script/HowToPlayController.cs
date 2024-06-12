@@ -7,7 +7,7 @@ public class HowToPlayController : MonoBehaviour
     // Reference to the Button component
     public Button backButton;
     public string mainMenuSceneName = "MainMenu"; // Name of the main menu scene
-    public string gameSceneName = "Scene2"; // Name of the game scene
+    public string gameSceneName = "Home"; // Name of the game scene
 
     // Start is called before the first frame update
     void Start()

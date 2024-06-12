@@ -16,7 +16,7 @@ public class scene_loader : MonoBehaviour
     IEnumerator Loading()
     {
         float elapsedTime = 0f;
-        AsyncOperation loading = SceneManager.LoadSceneAsync("Scene 2");
+        AsyncOperation loading = SceneManager.LoadSceneAsync("Home");
 
         // Prevent the scene from activating until we allow it
         loading.allowSceneActivation = false;
