@@ -8,6 +8,9 @@ public class InputNameController : MonoBehaviour
     public InputField inputName2; // Referensi untuk InputField Player 2
     public Button btnPlay; // Referensi untuk tombol Play
 
+    private string playerName1;
+    private string playerName2;
+
     void Start()
     {
         if (btnPlay != null)
@@ -34,22 +37,23 @@ public class InputNameController : MonoBehaviour
     {
         if (inputName1 == null || inputName2 == null)
         {
-            Debug.LogError("InputFields are not assigned correctly.");
+            Debug.LogError("InputFields are not assigned!");
             return;
         }
 
-        // Cek apakah kedua InputField tidak kosong
-        if (string.IsNullOrEmpty(inputName1.text) || string.IsNullOrEmpty(inputName2.text))
+        playerName1 = inputName1.text;
+        playerName2 = inputName2.text;
+
+        if (!string.IsNullOrEmpty(playerName1) && !string.IsNullOrEmpty(playerName2))
         {
-            Debug.LogWarning("Both player names must be entered!");
-            return; // Tidak melanjutkan jika ada yang kosong
+            // Store player names and load the next scene
+            PlayerPrefs.SetString("playerName1", playerName1);
+            PlayerPrefs.SetString("playerName2", playerName2);
+            SceneManager.LoadScene("Game"); // game scene
         }
-
-        // Simpan nama pemain dalam PlayerPrefs (opsional, jika perlu)
-        PlayerPrefs.SetString("Player1Name", inputName1.text);
-        PlayerPrefs.SetString("Player2Name", inputName2.text);
-
-        // Memuat scene Game
-        SceneManager.LoadScene("Game");
+        else
+        {
+            Debug.Log("Please enter names for both players.");
+        }
     }
 }
