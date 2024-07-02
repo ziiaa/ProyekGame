@@ -887,9 +887,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 34022264}
+      - m_Target: {fileID: 102900000, guid: dd2ed9e47a47b6c4e9d997aec39fc637, type: 3}
         m_TargetAssemblyTypeName: HowToPlayController, Assembly-CSharp
-        m_MethodName: OnBackButtonClicked
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
