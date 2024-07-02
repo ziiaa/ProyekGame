@@ -1,15 +1,29 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    //Tampilan Waktu
+    public Text timerText;
+    private float timeLeft = 60f;
+    private bool isPlayer1Turn = true;
+
     //Tampilan Score
     public int player1Score;
     public int player2Score;
 
+    //Tampilan Nama Karakter
+    private string playerName1;
+    private string playerName2;
+
+    public TMP_Text player1Text; // Referensi untuk TextMeshPro UI Player 1
+    public TMP_Text player2Text; // Referensi untuk TextMeshPro UI Player 2
+
+    //Score
     void Awake()
     {
         if (instance == null)
@@ -22,13 +36,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    //Tampilan Nama Karakter
-    private string playerName1;
-    private string playerName2;
-
-    public TMP_Text player1Text; // Referensi untuk TextMeshPro UI Player 1
-    public TMP_Text player2Text; // Referensi untuk TextMeshPro UI Player 2
 
     void Start()
     {
@@ -53,6 +60,53 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogError("Text UI for Player 2 is not assigned!");
+        }
+
+        //Mulai Timer
+        StartCoroutine(Timer());
+    }
+
+    //Timer
+    void Update()
+    {
+        if (timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+            timerText.text = "Time Left: " + Mathf.Round(timeLeft).ToString();
+        }
+        else
+        {
+            SwitchTurn();
+        }
+    }
+    private IEnumerator Timer()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(1f);
+            if (timeLeft > 0)
+            {
+                timeLeft -= 1f;
+                timerText.text = "Time Left: " + Mathf.Round(timeLeft).ToString();
+            }
+            else
+            {
+                SwitchTurn();
+            }
+        }
+    }
+    private void SwitchTurn()
+    {
+        isPlayer1Turn = !isPlayer1Turn;
+        timeLeft = 60f;
+
+        if (isPlayer1Turn)
+        {
+            Debug.Log("Giliran Player 1: " + playerName1);
+        }
+        else
+        {
+            Debug.Log("Giliran Player 2: " + playerName2);
         }
     }
 }

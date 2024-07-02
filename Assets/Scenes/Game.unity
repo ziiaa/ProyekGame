@@ -687,6 +687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6992e7f4abf33544bf34c74ac8c4b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timerText: {fileID: 1162111069}
   player1Score: 0
   player2Score: 0
   player1Text: {fileID: 1613933034}
@@ -764,7 +765,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 8a2b9e2a607dd2143b58c44bc32410b4, type: 3}
     m_FontSize: 20
     m_FontStyle: 1
     m_BestFit: 0
@@ -953,7 +954,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -310, y: 120.77}
+  m_AnchoredPosition: {x: -310, y: 69.175}
   m_SizeDelta: {x: 23.0962, y: 38.155}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1400981807
@@ -1182,7 +1183,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 310, y: 120.77}
+  m_AnchoredPosition: {x: 310, y: 69.174995}
   m_SizeDelta: {x: 23.0962, y: 38.155}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1568510036
