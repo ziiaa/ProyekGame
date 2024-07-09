@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    private AudioSource audioSource; // Referensi ke AudioSource
 
     //Tampilan Waktu
     public Text timerText;
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -39,6 +42,14 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        // Audio
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource != null)
+        {
+            audioSource.Play(); // Mulai memutar musik saat loading
+        }
+
         // Mengambil nama pemain dari PlayerPrefs
         playerName1 = PlayerPrefs.GetString("playerName1");
         playerName2 = PlayerPrefs.GetString("playerName2");
@@ -108,5 +119,20 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Giliran Player 2: " + playerName2);
         }
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "End")
+        {
+            if (audioSource != null)
+            {
+                audioSource.Stop(); // Hentikan musik saat pindah ke scene lain
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

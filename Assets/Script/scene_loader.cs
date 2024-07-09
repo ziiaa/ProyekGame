@@ -7,9 +7,17 @@ public class scene_loader : MonoBehaviour
 {
     public Image loadingfill;
     public float minimumLoadingTime = 3f; // Minimum time the loading should take
+    private AudioSource audioSource; // Referensi ke AudioSource
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource != null)
+        {
+            audioSource.Play(); // Mulai memutar musik saat loading
+        }
+
         StartCoroutine(Loading());
     }
 
@@ -33,6 +41,11 @@ public class scene_loader : MonoBehaviour
             // If the operation is almost done and the minimum loading time has passed, allow the scene to activate
             if (loading.progress >= 0.9f && elapsedTime >= minimumLoadingTime)
             {
+                if (audioSource != null)
+                {
+                    audioSource.Stop(); // Hentikan musik sebelum berpindah scene
+                }
+
                 loading.allowSceneActivation = true;
             }
 
