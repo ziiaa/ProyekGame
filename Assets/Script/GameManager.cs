@@ -1,29 +1,25 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using TMPro;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    //Tampilan Waktu
     public Text timerText;
     private float timeLeft = 60f;
     private bool isPlayer1Turn = true;
 
-    //Tampilan Score
     public int player1Score;
     public int player2Score;
 
-    //Tampilan Nama Karakter
     private string playerName1;
     private string playerName2;
 
-    public TMP_Text player1Text; // Referensi untuk TextMeshPro UI Player 1
-    public TMP_Text player2Text; // Referensi untuk TextMeshPro UI Player 2
+    public TMP_Text player1Text;
+    public TMP_Text player2Text;
 
-    //Score
     void Awake()
     {
         if (instance == null)
@@ -39,34 +35,30 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // Mengambil nama pemain dari PlayerPrefs
         playerName1 = PlayerPrefs.GetString("playerName1");
         playerName2 = PlayerPrefs.GetString("playerName2");
 
-        // Menampilkan nama pemain di UI Text
         if (player1Text != null)
         {
-            player1Text.text = "" + playerName1;
+            player1Text.text = playerName1;
         }
         else
         {
-            Debug.LogError("Text UI for Player 1 is not assigned!");
+            Debug.LogError("Text UI untuk Player 1 tidak ditugaskan!");
         }
 
         if (player2Text != null)
         {
-            player2Text.text = "" + playerName2;
+            player2Text.text = playerName2;
         }
         else
         {
-            Debug.LogError("Text UI for Player 2 is not assigned!");
+            Debug.LogError("Text UI untuk Player 2 tidak ditugaskan!");
         }
 
-        //Mulai Timer
         StartCoroutine(Timer());
     }
 
-    //Timer
     void Update()
     {
         if (timeLeft > 0)
@@ -79,9 +71,10 @@ public class GameManager : MonoBehaviour
             SwitchTurn();
         }
     }
+
     private IEnumerator Timer()
     {
-        while(true)
+        while (true)
         {
             yield return new WaitForSeconds(1f);
             if (timeLeft > 0)
@@ -95,7 +88,8 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    private void SwitchTurn()
+
+    public void SwitchTurn()
     {
         isPlayer1Turn = !isPlayer1Turn;
         timeLeft = 60f;
@@ -107,6 +101,23 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Giliran Player 2: " + playerName2);
+        }
+    }
+
+    public bool IsPlayer1Turn
+    {
+        get { return isPlayer1Turn; }
+    }
+
+    public void AddScore(int playerNumber, int scoreToAdd)
+    {
+        if (playerNumber == 1)
+        {
+            player1Score += scoreToAdd;
+        }
+        else if (playerNumber == 2)
+        {
+            player2Score += scoreToAdd;
         }
     }
 }

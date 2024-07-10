@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RandomizePixels : MonoBehaviour
 {
-    public Texture2D sourceTexture; 
+    public Texture2D sourceTexture;
+
     void Start()
     {
         if (sourceTexture == null)
