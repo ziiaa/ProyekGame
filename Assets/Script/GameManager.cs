@@ -1,11 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
+<<<<<<< HEAD
+=======
+using System.Collections;
+using UnityEngine.SceneManagement;
+>>>>>>> d2723c5ad0f73079e5ff7ca451e27b9b13a85191
 using TMPro;
 using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    private AudioSource audioSource; // Referensi ke AudioSource
 
     public Text timerText;
     private float timeLeft = 60f;
@@ -26,6 +32,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -35,6 +42,18 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+<<<<<<< HEAD
+=======
+        // Audio
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource != null)
+        {
+            audioSource.Play(); // Mulai memutar musik saat loading
+        }
+
+        // Mengambil nama pemain dari PlayerPrefs
+>>>>>>> d2723c5ad0f73079e5ff7ca451e27b9b13a85191
         playerName1 = PlayerPrefs.GetString("playerName1");
         playerName2 = PlayerPrefs.GetString("playerName2");
 
@@ -103,6 +122,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Giliran Player 2: " + playerName2);
         }
     }
+<<<<<<< HEAD
 
     public bool IsPlayer1Turn
     {
@@ -120,4 +140,21 @@ public class GameManager : MonoBehaviour
             player2Score += scoreToAdd;
         }
     }
+=======
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "End")
+        {
+            if (audioSource != null)
+            {
+                audioSource.Stop(); // Hentikan musik saat pindah ke scene lain
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+>>>>>>> d2723c5ad0f73079e5ff7ca451e27b9b13a85191
 }
