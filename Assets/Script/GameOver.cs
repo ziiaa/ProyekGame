@@ -14,9 +14,9 @@ public class GameOverManager : MonoBehaviour
 
     void Start()
     {
-        // Misalkan kita mengambil skor dari GameManager (yang harus kamu implementasi)
-        player1Score = GameManager.instance.player1Score;
-        player2Score = GameManager.instance.player2Score;
+        // Mengambil skor dari GameManager
+        player1Score = GameManager.instance.Player1Score;
+        player2Score = GameManager.instance.Player2Score;
 
         // Menentukan pemenang
         if (player1Score > player2Score)

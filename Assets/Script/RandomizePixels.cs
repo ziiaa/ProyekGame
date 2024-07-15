@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class RandomizePixels : MonoBehaviour
 {
@@ -14,6 +13,12 @@ public class RandomizePixels : MonoBehaviour
         }
 
         Debug.Log("Source Texture assigned successfully!");
+
+        if (!sourceTexture.isReadable)
+        {
+            Debug.LogError("Source Texture is not readable!");
+            return;
+        }
 
         // Create a new Texture2D with the same dimensions as the source texture
         Texture2D randomizedTexture = new Texture2D(sourceTexture.width, sourceTexture.height);

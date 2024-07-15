@@ -2,16 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class PuzzleGame : MonoBehaviour
+public class PuzzleGame1 : MonoBehaviour
 {
-    public Transform PuzzelContainer; // Container untuk potongan puzzle yang dapat dipilih pemain
-    public Transform PuzzelContainer1; // Container untuk kotak yang dapat diklik
+    public Transform PuzzleContainer; // Container untuk potongan puzzle yang dapat dipilih pemain
+    public Transform PuzzleContainer1; // Container untuk kotak yang dapat diklik
     public Text randomWord; // Tulisan "MIAW"
     public Button Btn_Check; // Button untuk mengecek apakah potongan puzzle yang dipilih sudah benar
     public Text Score_Player1; // Score pada player 1
     public Text Score_Player2; // Score pada player 2
-
-    public List<Sprite> puzzleSprites; // Daftar sprite puzzle
 
     private string targetWord = "MIAW";
     private List<GameObject> selectedPieces = new List<GameObject>();
@@ -20,16 +18,10 @@ public class PuzzleGame : MonoBehaviour
 
     private void Start()
     {
-        if (PuzzelContainer == null || PuzzelContainer1 == null || randomWord == null ||
-            Btn_Check == null || Score_Player1 == null || Score_Player2 == null || puzzleSprites == null)
+        if (PuzzleContainer == null || PuzzleContainer1 == null || randomWord == null ||
+            Btn_Check == null || Score_Player1 == null || Score_Player2 == null)
         {
             Debug.LogError("Harap tugaskan semua komponen yang dibutuhkan di inspector.");
-            return;
-        }
-
-        if (puzzleSprites.Count != 8)
-        {
-            Debug.LogError("Harap tugaskan tepat 8 sprite ke daftar puzzleSprites.");
             return;
         }
 
@@ -40,15 +32,15 @@ public class PuzzleGame : MonoBehaviour
 
     private void AssignPuzzlePieces()
     {
-        int index = 0;
-        foreach (Transform child in PuzzelContainer)
+        // Mengambil sprite dari PuzzleContainer dan assign ke PuzzleContainer1
+        foreach (Transform child in PuzzleContainer)
         {
-            if (index < 8)
+            Transform targetSlot = PuzzleContainer1.GetChild(child.GetSiblingIndex());
+            if (child.TryGetComponent<Image>(out Image childImage) && targetSlot.TryGetComponent<Image>(out Image targetImage))
             {
-                child.GetComponent<Image>().sprite = puzzleSprites[index];
-                child.name = targetWord[index % targetWord.Length].ToString();
-                child.GetComponent<Button>().onClick.AddListener(() => OnPuzzlePieceSelected(child.gameObject));
-                index++;
+                targetImage.sprite = childImage.sprite;
+                targetSlot.name = child.name;
+                targetSlot.GetComponent<Button>().onClick.AddListener(() => OnPuzzlePieceSelected(targetSlot.gameObject));
             }
         }
     }
@@ -71,7 +63,7 @@ public class PuzzleGame : MonoBehaviour
         }
 
         string formedWord = string.Join("", selectedPieces.ConvertAll(p => p.name).ToArray());
-        bool isPlayer1Turn = GameManager.instance.IsPlayer1Turn;
+        bool isPlayer1Turn = GameManager.instance.IsPlayer1Turn; 
 
         if (targetWord.Contains(formedWord))
         {

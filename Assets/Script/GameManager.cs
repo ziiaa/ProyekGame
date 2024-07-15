@@ -1,132 +1,92 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-<<<<<<< HEAD
-=======
-using System.Collections;
 using UnityEngine.SceneManagement;
->>>>>>> d2723c5ad0f73079e5ff7ca451e27b9b13a85191
-using TMPro;
-using System.Collections;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
-    private AudioSource audioSource; // Referensi ke AudioSource
+    public static GameManager instance; // Instance statis
 
-    public Text timerText;
-    private float timeLeft = 60f;
-    private bool isPlayer1Turn = true;
+    public Text Timer;
+    public Text player1Text;
+    public Text player2Text;
+    public Text Score_Player1;
+    public Text Score_Player2;
 
-    public int player1Score;
-    public int player2Score;
+    private int player1Score = 0;
+    private int player2Score = 0;
+    private bool isPlayer1Turn = true; // Properti untuk mengecek giliran pemain
+    private float gameTime = 60f; // Waktu permainan dalam detik
+    private AudioSource audioSource; // Deklarasikan audioSource
 
-    private string playerName1;
-    private string playerName2;
+    public bool IsPlayer1Turn
+    {
+        get { return isPlayer1Turn; }
+    }
 
-    public TMP_Text player1Text;
-    public TMP_Text player2Text;
+    public int Player1Score
+    {
+        get { return player1Score; }
+    }
+
+    public int Player2Score
+    {
+        get { return player2Score; }
+    }
 
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded;
         }
-        else
+        else if (instance != this)
         {
             Destroy(gameObject);
         }
+        audioSource = GetComponent<AudioSource>(); // Inisialisasi audioSource
     }
 
     void Start()
     {
-<<<<<<< HEAD
-=======
-        // Audio
-        audioSource = GetComponent<AudioSource>();
-
-        if (audioSource != null)
-        {
-            audioSource.Play(); // Mulai memutar musik saat loading
-        }
-
-        // Mengambil nama pemain dari PlayerPrefs
->>>>>>> d2723c5ad0f73079e5ff7ca451e27b9b13a85191
-        playerName1 = PlayerPrefs.GetString("playerName1");
-        playerName2 = PlayerPrefs.GetString("playerName2");
-
-        if (player1Text != null)
-        {
-            player1Text.text = playerName1;
-        }
-        else
-        {
-            Debug.LogError("Text UI untuk Player 1 tidak ditugaskan!");
-        }
-
-        if (player2Text != null)
-        {
-            player2Text.text = playerName2;
-        }
-        else
-        {
-            Debug.LogError("Text UI untuk Player 2 tidak ditugaskan!");
-        }
-
-        StartCoroutine(Timer());
+        // Inisialisasi
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        ResetGame();
     }
 
     void Update()
     {
-        if (timeLeft > 0)
+        if (gameTime > 0)
         {
-            timeLeft -= Time.deltaTime;
-            timerText.text = "Time Left: " + Mathf.Round(timeLeft).ToString();
-        }
-        else
-        {
-            SwitchTurn();
-        }
-    }
+            gameTime -= Time.deltaTime;
+            Timer.text = "Time: " + Mathf.RoundToInt(gameTime).ToString();
 
-    private IEnumerator Timer()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1f);
-            if (timeLeft > 0)
+            if (gameTime <= 0)
             {
-                timeLeft -= 1f;
-                timerText.text = "Time Left: " + Mathf.Round(timeLeft).ToString();
-            }
-            else
-            {
-                SwitchTurn();
+                EndGame();
             }
         }
     }
 
-    public void SwitchTurn()
+    void ResetGame()
     {
-        isPlayer1Turn = !isPlayer1Turn;
-        timeLeft = 60f;
-
-        if (isPlayer1Turn)
-        {
-            Debug.Log("Giliran Player 1: " + playerName1);
-        }
-        else
-        {
-            Debug.Log("Giliran Player 2: " + playerName2);
-        }
+        player1Score = 0;
+        player2Score = 0;
+        gameTime = 60f; // Reset waktu permainan
+        UpdateScore();
     }
-<<<<<<< HEAD
 
-    public bool IsPlayer1Turn
+    void EndGame()
     {
-        get { return isPlayer1Turn; }
+        Timer.text = "Game Over!";
+        // Logika untuk mengakhiri permainan
+    }
+
+    void UpdateScore()
+    {
+        Score_Player1.text = "Score: " + player1Score.ToString();
+        Score_Player2.text = "Score: " + player2Score.ToString();
     }
 
     public void AddScore(int playerNumber, int scoreToAdd)
@@ -139,8 +99,16 @@ public class GameManager : MonoBehaviour
         {
             player2Score += scoreToAdd;
         }
+
+        UpdateScore();
     }
-=======
+
+    public void SwitchTurn()
+    {
+        isPlayer1Turn = !isPlayer1Turn;
+        // Logika lain untuk mengubah giliran
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name != "End")
@@ -156,5 +124,4 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
->>>>>>> d2723c5ad0f73079e5ff7ca451e27b9b13a85191
 }
