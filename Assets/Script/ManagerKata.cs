@@ -11,6 +11,8 @@ public class ManagerKata : MonoBehaviour
     [SerializeField] string[] listKatakata;
 
     private int poinKata, poin;
+    private int currentWordIndex = 0;
+    private int totalWordsToSolve = 5; // Number of words to solve
 
     void Start()
     {
@@ -23,11 +25,22 @@ public class ManagerKata : MonoBehaviour
             return;
         }
 
-        IntKata(listKatakata[0]);
+        IntKata(listKatakata[currentWordIndex]);
     }
 
     void IntKata(string kata)
     {
+        // Clear previous word slots
+        foreach (Transform child in slotAwal)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (Transform child in slotAkhir)
+        {
+            Destroy(child.gameObject);
+        }
+
         char[] hurufkata = kata.ToCharArray();
         char[] hurufAcak = new char[hurufkata.Length];
 
@@ -50,6 +63,7 @@ public class ManagerKata : MonoBehaviour
         }
 
         poinKata = hurufkata.Length;
+        poin = 0; // Reset points for the new word
     }
 
     public void TambahPoin()
@@ -59,6 +73,17 @@ public class ManagerKata : MonoBehaviour
         if (poin == poinKata)
         {
             Debug.Log("Susunan Berhasil");
+            KataKami.Instance.AddScore(); // Add this line to add score
+
+            currentWordIndex++;
+            if (currentWordIndex < totalWordsToSolve && currentWordIndex < listKatakata.Length)
+            {
+                IntKata(listKatakata[currentWordIndex]);
+            }
+            else
+            {
+                KataKami.Instance.EndGame(); // End the game if all words are solved
+            }
         }
     }
 }
