@@ -49,7 +49,7 @@ public class InputNameController : MonoBehaviour
             // Store player names and load the next scene
             PlayerPrefs.SetString("playerName1", playerName1);
             PlayerPrefs.SetString("playerName2", playerName2);
-            SceneManager.LoadScene("Game"); // game scene
+            SceneManager.LoadScene("MainPuzzle"); // game scene
         }
         else
         {

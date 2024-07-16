@@ -14,9 +14,9 @@ public class GameOverManager : MonoBehaviour
 
     void Start()
     {
-        // Mengambil skor dari GameManager
-        player1Score = GameManager.instance.Player1Score;
-        player2Score = GameManager.instance.Player2Score;
+        // Mengambil skor dari PlayerPrefs
+        player1Score = PlayerPrefs.GetInt("player1Score");
+        player2Score = PlayerPrefs.GetInt("player2Score");
 
         // Menentukan pemenang
         if (player1Score > player2Score)
@@ -43,6 +43,6 @@ public class GameOverManager : MonoBehaviour
     void OnPlayAgainButton()
     {
         // Memuat ulang scene saat tombol Play Again ditekan
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("GameScene"); // Ganti "GameScene" dengan nama scene game utama Anda
     }
 }
