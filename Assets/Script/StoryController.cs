@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 public class StoryController : MonoBehaviour
 {
     public TextMeshProUGUI dialogText;
+    public AudioSource audioSource; // Tambahkan referensi ke AudioSource
 
     private string[] storyLines = {
-        "Hai, teman-teman! Namaku Pu!", 
+        "Hai, teman-teman! Namaku Pu!",
         "Selamat datang di Dunia Puzzle Pixel!",
         "Di sini, kita akan memasuki petualangan penuh warna dan keajaiban.",
         "Aku akan mengajak kalian untuk bermain tebak potongan puzzle huruf.",
@@ -20,6 +21,18 @@ public class StoryController : MonoBehaviour
 
     void Start()
     {
+        // Muat dan mainkan audio saat memulai
+        AudioClip introClip = Resources.Load<AudioClip>("Assets/Audio/Jackson F. Smith - Cantina Rag");
+        if (introClip != null)
+        {
+            audioSource.clip = introClip;
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogError("Audio clip not found!");
+        }
+
         ShowNextLine();
     }
 
@@ -29,7 +42,7 @@ public class StoryController : MonoBehaviour
         {
             dialogText.text = storyLines[currentLineIndex];
             currentLineIndex++;
-            Invoke("ShowNextLine", 3f); // Menampilkan baris berikutnya setelah 4 detik
+            Invoke("ShowNextLine", 3f); // Menampilkan baris berikutnya setelah 3 detik
         }
         else
         {
