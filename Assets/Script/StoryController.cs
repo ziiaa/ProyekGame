@@ -1,11 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using UnityEngine.UI; // Gunakan UnityEngine.UI untuk Text
 using UnityEngine.SceneManagement;
 
 public class StoryController : MonoBehaviour
 {
-    public TextMeshProUGUI dialogText;
+    public Text dialogText; // Ubah dari TextMeshProUGUI ke Text
     public AudioSource audioSource; // Tambahkan referensi ke AudioSource
 
     private string[] storyLines = {
@@ -22,7 +21,7 @@ public class StoryController : MonoBehaviour
     void Start()
     {
         // Muat dan mainkan audio saat memulai
-        AudioClip introClip = Resources.Load<AudioClip>("Assets\\Audio\\Jackson F. Smith - Cantina Rag.mp3");
+        AudioClip introClip = Resources.Load<AudioClip>("Assets\\Audio\\Jackson F. Smith - Cantina Rag");
         if (introClip != null)
         {
             audioSource.clip = introClip;
