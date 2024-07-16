@@ -7,6 +7,7 @@ public class GameOverManager : MonoBehaviour
     public Text scoreText;
     public Text winnerText;
     public Button btn_PlayAgain;
+    public Button btn_GamePlay;
 
     private int player1Score;
     private int player2Score;
@@ -38,11 +39,18 @@ public class GameOverManager : MonoBehaviour
 
         // Menambahkan listener untuk tombol Play Again
         btn_PlayAgain.onClick.AddListener(OnPlayAgainButton);
+        btn_GamePlay.onClick.AddListener(OnPlayMainButton); // Corrected line
     }
 
     void OnPlayAgainButton()
     {
-        // Memuat ulang scene saat tombol Play Again ditekan
-        SceneManager.LoadScene("GameScene"); // Ganti "GameScene" dengan nama scene game utama Anda
+        // Memuat ulang scene permainan saat tombol Play Again ditekan
+        SceneManager.LoadScene("MainPuzzle"); // Ganti "GameScene" dengan nama scene permainan Anda
+    }
+
+    void OnPlayMainButton()
+    {
+        // Memuat ulang scene permainan saat tombol Play Again ditekan
+        SceneManager.LoadScene("Home"); // Ganti "GameScene" dengan nama scene permainan Anda
     }
 }
