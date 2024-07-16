@@ -22,15 +22,11 @@ public class StoryController : MonoBehaviour
     void Start()
     {
         // Muat dan mainkan audio saat memulai
-        AudioClip introClip = Resources.Load<AudioClip>("Assets/Audio/Jackson F. Smith - Cantina Rag");
+        AudioClip introClip = Resources.Load<AudioClip>("Assets\\Audio\\Jackson F. Smith - Cantina Rag.mp3");
         if (introClip != null)
         {
             audioSource.clip = introClip;
             audioSource.Play();
-        }
-        else
-        {
-            Debug.LogError("Audio clip not found!");
         }
 
         ShowNextLine();
