@@ -1,10 +1,10 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StoryPu : MonoBehaviour
 {
-    public TextMeshProUGUI dialogText;
+    public Text dialogText;
 
     private string[] storyLines = {
         "Hai, teman-teman! Namaku Pu! Selamat datang di Dunia Fantasi Puzzle!",
