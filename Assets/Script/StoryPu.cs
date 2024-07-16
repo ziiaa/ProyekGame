@@ -1,10 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 
-public class StoryController : MonoBehaviour
+public class StoryPu : MonoBehaviour
 {
-    public Text dialogText;
+    public TextMeshProUGUI dialogText;
 
     private string[] storyLines = {
         "Hai, teman-teman! Namaku Pu! Selamat datang di Dunia Fantasi Puzzle!",
@@ -38,7 +38,12 @@ public class StoryController : MonoBehaviour
 
     void StartGame()
     {
-        SceneManager.LoadSceneAsync("Home");
+        LoadHomeScene();
     }
 
+    void LoadHomeScene()
+    {
+        Debug.Log("Loading Home scene synchronously...");
+        SceneManager.LoadScene("Home");
+    }
 }
