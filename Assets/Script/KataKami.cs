@@ -19,9 +19,10 @@ public class KataKami : MonoBehaviour
     public int player2Score = 0;
 
     private float totalTime = 60f;
-    private float turnTime = 5f;
+    private float turnTime = 10f;
     private float turnTimer;
     private bool isPlayer1Turn = true;
+    private AudioSource audioSource; // Deklarasikan audioSource
 
     void Awake()
     {
@@ -35,6 +36,7 @@ public class KataKami : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        audioSource = GetComponent<AudioSource>(); // Inisialisasi audioSource
     }
 
     void Start()
@@ -47,6 +49,12 @@ public class KataKami : MonoBehaviour
 
         turnTimer = turnTime;
         TurnWarningText.gameObject.SetActive(false); // Hide the warning text initially
+
+        // Mulai memutar musik
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
     }
 
     void Update()
@@ -95,6 +103,12 @@ public class KataKami : MonoBehaviour
 
     public void EndGame()
     {
+        // Hentikan musik saat pindah scene
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
+
         // Save the scores in PlayerPrefs
         PlayerPrefs.SetInt("player1Score", player1Score);
         PlayerPrefs.SetInt("player2Score", player2Score);

@@ -8,10 +8,12 @@ public class GameOverManager : MonoBehaviour
     public Text winnerText;
     public Button btn_PlayAgain;
     public Button btn_GamePlay;
+    public AudioClip gameOverMusic; // Referensi ke musik game over
 
     private int player1Score;
     private int player2Score;
     private string winner;
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -40,16 +42,40 @@ public class GameOverManager : MonoBehaviour
         // Menambahkan listener untuk tombol Play Again
         btn_PlayAgain.onClick.AddListener(OnPlayAgainButton);
         btn_GamePlay.onClick.AddListener(OnPlayMainButton); // Corrected line
+
+        // Setup audio
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource != null && gameOverMusic != null)
+        {
+            audioSource.clip = gameOverMusic;
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogError("AudioSource or gameOverMusic is not assigned!");
+        }
     }
 
     void OnPlayAgainButton()
     {
+        // Hentikan musik game over
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
+
         // Memuat ulang scene permainan saat tombol Play Again ditekan
         SceneManager.LoadScene("MainPuzzle"); // Ganti "GameScene" dengan nama scene permainan Anda
     }
 
     void OnPlayMainButton()
     {
+        // Hentikan musik game over
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
+
         // Memuat ulang scene permainan saat tombol Play Again ditekan
         SceneManager.LoadScene("Home"); // Ganti "GameScene" dengan nama scene permainan Anda
     }
