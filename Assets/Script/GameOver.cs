@@ -8,7 +8,7 @@ public class GameOverManager : MonoBehaviour
     public Text winnerText;
     public Button btn_PlayAgain;
     public Button btn_GamePlay;
-    public AudioClip gameOverMusic; // Referensi ke musik game over
+    public AudioClip gameOverMusic;
 
     private int player1Score;
     private int player2Score;
@@ -17,11 +17,9 @@ public class GameOverManager : MonoBehaviour
 
     void Start()
     {
-        // Mengambil skor dari PlayerPrefs
         player1Score = PlayerPrefs.GetInt("player1Score");
         player2Score = PlayerPrefs.GetInt("player2Score");
 
-        // Menentukan pemenang
         if (player1Score > player2Score)
         {
             winner = "Player 1 Wins!";
@@ -35,15 +33,12 @@ public class GameOverManager : MonoBehaviour
             winner = "It's a Draw!";
         }
 
-        // Menampilkan hasil di UI
         scoreText.text = "Player 1: " + player1Score.ToString() + " - Player 2: " + player2Score.ToString();
         winnerText.text = winner;
 
-        // Menambahkan listener untuk tombol Play Again
         btn_PlayAgain.onClick.AddListener(OnPlayAgainButton);
-        btn_GamePlay.onClick.AddListener(OnPlayMainButton); // Corrected line
+        btn_GamePlay.onClick.AddListener(OnPlayMainButton);
 
-        // Setup audio
         audioSource = GetComponent<AudioSource>();
         if (audioSource != null && gameOverMusic != null)
         {
@@ -58,25 +53,31 @@ public class GameOverManager : MonoBehaviour
 
     void OnPlayAgainButton()
     {
-        // Hentikan musik game over
         if (audioSource != null)
         {
             audioSource.Stop();
         }
 
-        // Memuat ulang scene permainan saat tombol Play Again ditekan
-        SceneManager.LoadScene("MainPuzzle"); // Ganti "GameScene" dengan nama scene permainan Anda
+        if (ManagerKata.Instance != null)
+        {
+            ManagerKata.Instance.ResetKataKami();
+        }
+
+        if (KataKami.Instance != null)
+        {
+            KataKami.Instance.ResetKataKami();
+        }
+
+        SceneManager.LoadScene("MainPuzzle");
     }
 
     void OnPlayMainButton()
     {
-        // Hentikan musik game over
         if (audioSource != null)
         {
             audioSource.Stop();
         }
 
-        // Memuat ulang scene permainan saat tombol Play Again ditekan
-        SceneManager.LoadScene("Home"); // Ganti "GameScene" dengan nama scene permainan Anda
+        SceneManager.LoadScene("Home");
     }
 }

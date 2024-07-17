@@ -6,12 +6,12 @@ public class KataKami : MonoBehaviour
 {
     public static KataKami Instance { get; private set; }
 
-    public Text player1Text; // Reference for Player 1 Name Text
-    public Text player2Text; // Reference for Player 2 Name Text
-    public Text Timer; // Reference for Timer Text
-    public Text Score_Player1; // Reference for Player 1 Score Text
-    public Text Score_Player2; // Reference for Player 2 Score Text
-    public Text TurnWarningText; // Reference for Turn Warning Text
+    public Text player1Text;
+    public Text player2Text;
+    public Text Timer;
+    public Text Score_Player1;
+    public Text Score_Player2;
+    public Text TurnWarningText;
 
     public string playerName1;
     public string playerName2;
@@ -22,21 +22,21 @@ public class KataKami : MonoBehaviour
     private float turnTime = 10f;
     private float turnTimer;
     private bool isPlayer1Turn = true;
-    private AudioSource audioSource; // Deklarasikan audioSource
+    private AudioSource audioSource;
 
     void Awake()
     {
-        // Ensure only one instance of KataKami exists
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: keeps the instance alive between scenes
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
-        audioSource = GetComponent<AudioSource>(); // Inisialisasi audioSource
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -48,9 +48,8 @@ public class KataKami : MonoBehaviour
         player2Text.text = playerName2;
 
         turnTimer = turnTime;
-        TurnWarningText.gameObject.SetActive(false); // Hide the warning text initially
+        TurnWarningText.gameObject.SetActive(false);
 
-        // Mulai memutar musik
         if (audioSource != null)
         {
             audioSource.Play();
@@ -80,7 +79,7 @@ public class KataKami : MonoBehaviour
     {
         TurnWarningText.text = isPlayer1Turn ? $"{playerName1}'s turn is over!" : $"{playerName2}'s turn is over!";
         TurnWarningText.gameObject.SetActive(true);
-        Invoke("HideTurnWarning", 2f); // Hide the warning after 2 seconds
+        Invoke("HideTurnWarning", 2f);
     }
 
     void HideTurnWarning()
@@ -103,17 +102,14 @@ public class KataKami : MonoBehaviour
 
     public void EndGame()
     {
-        // Hentikan musik saat pindah scene
         if (audioSource != null)
         {
             audioSource.Stop();
         }
 
-        // Save the scores in PlayerPrefs
         PlayerPrefs.SetInt("player1Score", player1Score);
         PlayerPrefs.SetInt("player2Score", player2Score);
 
-        // Load the End scene
         SceneManager.LoadScene("End");
     }
 
@@ -127,5 +123,15 @@ public class KataKami : MonoBehaviour
         {
             player2Score++;
         }
+    }
+
+    public void ResetKataKami()
+    {
+        totalTime = 60f;
+        player1Score = 0;
+        player2Score = 0;
+        isPlayer1Turn = true;
+        turnTimer = turnTime;
+        UpdateUI();
     }
 }

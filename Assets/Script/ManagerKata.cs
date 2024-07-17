@@ -12,13 +12,23 @@ public class ManagerKata : MonoBehaviour
 
     private int poinKata, poin;
     private int currentWordIndex = 0;
-    private int totalWordsToSolve = 5; // Number of words to solve
+    private int totalWordsToSolve = 5;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
-        Instance = this;
-
-        // Ensure listKatakata is not null or empty
         if (listKatakata == null || listKatakata.Length == 0)
         {
             Debug.LogError("listKatakata is not assigned or is empty.");
@@ -28,9 +38,8 @@ public class ManagerKata : MonoBehaviour
         IntKata(listKatakata[currentWordIndex]);
     }
 
-    void IntKata(string kata)
+    public void IntKata(string kata)
     {
-        // Clear previous word slots
         foreach (Transform child in slotAwal)
         {
             Destroy(child.gameObject);
@@ -53,17 +62,17 @@ public class ManagerKata : MonoBehaviour
             hurufKataCopy.RemoveAt(randomIndex);
 
             DragScript temp = Instantiate(hurufPrefab, slotAwal);
-            temp.Inisialisasi(slotAwal, hurufAcak[i].ToString(), false); // Corrected Inisialisasi call
+            temp.Inisialisasi(slotAwal, hurufAcak[i].ToString(), false);
         }
 
         for (int i = 0; i < hurufkata.Length; i++)
         {
             DragScript temp = Instantiate(hurufPrefab, slotAkhir);
-            temp.Inisialisasi(slotAkhir, hurufkata[i].ToString(), true); // Corrected Inisialisasi call
+            temp.Inisialisasi(slotAkhir, hurufkata[i].ToString(), true);
         }
 
         poinKata = hurufkata.Length;
-        poin = 0; // Reset points for the new word
+        poin = 0;
     }
 
     public void TambahPoin()
@@ -73,7 +82,7 @@ public class ManagerKata : MonoBehaviour
         if (poin == poinKata)
         {
             Debug.Log("Susunan Berhasil");
-            KataKami.Instance.AddScore(); // Add this line to add score
+            KataKami.Instance.AddScore();
 
             currentWordIndex++;
             if (currentWordIndex < totalWordsToSolve && currentWordIndex < listKatakata.Length)
@@ -82,8 +91,17 @@ public class ManagerKata : MonoBehaviour
             }
             else
             {
-                KataKami.Instance.EndGame(); // End the game if all words are solved
+                KataKami.Instance.EndGame();
             }
+        }
+    }
+
+    public void ResetKataKami()
+    {
+        currentWordIndex = 0;
+        if (listKatakata != null && listKatakata.Length > 0)
+        {
+            IntKata(listKatakata[currentWordIndex]);
         }
     }
 }
