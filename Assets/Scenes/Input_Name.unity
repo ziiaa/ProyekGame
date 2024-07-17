@@ -1067,13 +1067,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 834563024}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97e0e74f8510c934fa7fdf14f9ed9a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inputName1: {fileID: 0}
-  inputName2: {fileID: 0}
+  inputName2: {fileID: 395671449}
   btnPlay: {fileID: 834563026}
 --- !u!1 &1297656630
 GameObject:
