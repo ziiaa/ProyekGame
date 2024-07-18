@@ -12,6 +12,8 @@ public class GameOverManager : MonoBehaviour
 
     private int player1Score;
     private int player2Score;
+    private string playerName1;
+    private string playerName2;
     private string winner;
     private AudioSource audioSource;
 
@@ -19,21 +21,23 @@ public class GameOverManager : MonoBehaviour
     {
         player1Score = PlayerPrefs.GetInt("player1Score");
         player2Score = PlayerPrefs.GetInt("player2Score");
+        playerName1 = PlayerPrefs.GetString("playerName1");
+        playerName2 = PlayerPrefs.GetString("playerName2");
 
         if (player1Score > player2Score)
         {
-            winner = "Player 1 Wins!";
+            winner = playerName1 + " Wins!";
         }
         else if (player2Score > player1Score)
         {
-            winner = "Player 2 Wins!";
+            winner = playerName2 + " Wins!";
         }
         else
         {
             winner = "It's a Draw!";
         }
 
-        scoreText.text = "Player 1: " + player1Score.ToString() + " - Player 2: " + player2Score.ToString();
+        scoreText.text = playerName1 + ": " + player1Score.ToString() + " - " + playerName2 + ": " + player2Score.ToString();
         winnerText.text = winner;
 
         btn_PlayAgain.onClick.AddListener(OnPlayAgainButton);
