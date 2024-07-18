@@ -306,11 +306,11 @@ MonoBehaviour:
   slotAwal: {fileID: 814283950}
   slotAkhir: {fileID: 201260613}
   listKatakata:
-  - GAJAH
-  - ELANG
-  - IKAN
-  - ULAR
-  - KATAK
+  - KITTIES
+  - WHISKER
+  - TABBY
+  - WHITE
+  - BROWN
 --- !u!4 &181684767
 Transform:
   m_ObjectHideFlags: 0
