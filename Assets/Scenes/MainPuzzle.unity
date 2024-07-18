@@ -306,10 +306,10 @@ MonoBehaviour:
   slotAwal: {fileID: 814283950}
   slotAkhir: {fileID: 201260613}
   listKatakata:
-  - KITTIES
-  - WHISKER
-  - TABBY
+  - KITTY
   - WHITE
+  - TABBY
+  - FRESH
   - BROWN
 --- !u!4 &181684767
 Transform:
